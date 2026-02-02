@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You Said Yes! 💕</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="yes-page">
+  <div class="container">
+    <div class="confetti"></div>
+    
+    <div class="celebration-content">
+      <h1 class="celebration-title">🎉 You Said Yes! 💕</h1>
+      
+      <div class="celebration-message">
+        <p>I'm the happiest person alive right now!</p>
+        <p>You've just made me the luckiest person in the world.</p>
+      </div>
+
+      <div class="celebration-image">
+        <img src="/images/photo2.jpg" alt="Our happy moment" class="happy-photo" id="happy-photo">
+      </div>
+
+      <div class="heart-big">💕</div>
+
+      <button class="btn btn-back" onclick="location.reload()">
+        See it Again
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Handle missing image
+    document.getElementById('happy-photo').addEventListener('error', function() {
+      this.parentElement.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:300px;background:linear-gradient(135deg, #ffebee 0%, #fce4ec 100%);color:#ff1744;font-size:14px;padding:20px;text-align:center;">📸 Your happy photo<br/>Place photo2.jpg in public/images/</div>';
+    });
+
+    // Confetti animation
+    function createConfetti() {
+      const confetti = document.querySelector('.confetti');
+      
+      for (let i = 0; i < 50; i++) {
+        const piece = document.createElement('div');
+        piece.style.position = 'absolute';
+        piece.style.width = '10px';
+        piece.style.height = '10px';
+        piece.style.background = ['#ff1744', '#f50057', '#c51162', '#ffc400', '#ff6f00'][Math.floor(Math.random() * 5)];
+        piece.style.left = Math.random() * 100 + '%';
+        piece.style.top = '-10px';
+        piece.style.opacity = '1';
+        piece.style.pointerEvents = 'none';
+        piece.style.borderRadius = '50%';
+        
+        confetti.appendChild(piece);
+        
+        // Animate confetti falling
+        let top = -10;
+        let left = parseFloat(piece.style.left);
+        const speed = Math.random() * 3 + 2;
+        const drift = (Math.random() - 0.5) * 2;
+        
+        const interval = setInterval(() => {
+          top += speed;
+          left += drift;
+          piece.style.top = top + 'px';
+          piece.style.left = left + '%';
+          
+          if (top > window.innerHeight) {
+            clearInterval(interval);
+            piece.remove();
+          }
+        }, 20);
+      }
+    }
+
+    // Start confetti on page load
+    window.addEventListener('load', () => {
+      createConfetti();
+      setInterval(createConfetti, 500);
+    });
+  </script>
+</body>
+</html>

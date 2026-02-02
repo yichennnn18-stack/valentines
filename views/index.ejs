@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Be My Valentine? 💕</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="content-wrapper">
+      <!-- Photo Section -->
+      <div class="photo-section">
+        <div class="photo-gallery">
+          <img src="/images/photo1.jpg" alt="Us together" class="couple-photo">
+        </div>
+      </div>
+
+      <!-- Message Section -->
+      <div class="message-section">
+        <h1 class="title">Will You Be My Valentine? 💕</h1>
+        
+        <div class="message-text">
+          <p>Every moment with you is special, and I can't imagine celebrating Valentine's Day with anyone else.</p>
+          <p class="highlight">So, what do you say?</p>
+        </div>
+
+        <!-- Response Buttons -->
+        <form class="button-container" id="responseForm">
+          <button type="submit" name="answer" value="yes" class="btn btn-yes">
+            <span>Yes! 💘</span>
+          </button>
+          <button type="button" class="btn btn-no" id="noBtn">
+            <span>No 💔</span>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Falling hearts animation -->
+    <div class="hearts-background">
+      <div class="heart"></div>
+      <div class="heart"></div>
+      <div class="heart"></div>
+      <div class="heart"></div>
+      <div class="heart"></div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('responseForm');
+    const noBtn = document.getElementById('noBtn');
+    
+    // Yes button - submit form
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      fetch('/response', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ answer: 'yes' })
+      })
+      .then(res => res.text())
+      .then(html => {
+        document.body.innerHTML = html;
+      });
+    });
+
+    // No button - moves away from mouse
+    noBtn.addEventListener('mouseover', (e) => {
+      const randomX = Math.floor(Math.random() * (window.innerWidth - 100));
+      const randomY = Math.floor(Math.random() * (window.innerHeight - 50));
+      
+      noBtn.style.position = 'absolute';
+      noBtn.style.left = randomX + 'px';
+      noBtn.style.top = randomY + 'px';
+    });
+
+    // Mobile: No button moves on touch
+    noBtn.addEventListener('touchstart', (e) => {
+      const randomX = Math.floor(Math.random() * (window.innerWidth - 100));
+      const randomY = Math.floor(Math.random() * (window.innerHeight - 50));
+      
+      noBtn.style.position = 'absolute';
+      noBtn.style.left = randomX + 'px';
+      noBtn.style.top = randomY + 'px';
+    });
+  </script>
+</body>
+</html>
